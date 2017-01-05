@@ -2,12 +2,22 @@ package entities
 
 import (
 	"io"
-	"io/ioutil"
-	"path"
 	"strings"
 
 	"github.com/beevik/etree"
 )
+
+const XMLtemplate = `<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://autotask.net/ATWS/v1_5/" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Body>
+    <tns:query xmlns="http://autotask.net/ATWS/v1_5/">
+      <sXML><![CDATA[
+        {queryxml}
+]]></sXML>
+    </tns:query>
+  </env:Body>
+</env:Envelope>
+`
 
 type QueryExpression struct {
 	Field string
@@ -31,19 +41,13 @@ func (q *QueryXML) ToReader() io.Reader {
 }
 
 func (q *QueryXML) String() string {
-	tmpl, err := ioutil.ReadFile(path.Join("templates", "query.xml"))
-
-	if err != nil {
-		return ""
-	}
-
 	out, err := q.Doc.WriteToString()
 
 	if err != nil {
 		return ""
 	}
 
-	return strings.Replace(string(tmpl), "{queryxml}", out, 1)
+	return strings.Replace(XMLtemplate, "{queryxml}", out, 1)
 }
 
 func (q *QueryXML) Entity(name string) {
