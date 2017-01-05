@@ -36,8 +36,10 @@ func (qe *QueryExpression) ToQueryXML() *QueryXML {
 }
 
 type QueryXML struct {
-	Doc  *etree.Document
-	Qxml *etree.Element
+	Doc       *etree.Document
+	Qxml      *etree.Element
+	Qry       *etree.Element
+	MultiCond bool
 }
 
 func (q *QueryXML) ToReader() io.Reader {
@@ -62,9 +64,21 @@ func (q *QueryXML) Entity(name string) {
 	e := q.Qxml.CreateElement("entity")
 	e.SetText(name)
 }
+
+func (q *QueryXML) MultiCondition() {
+	q.MultiCond = true
+}
+
 func (q *QueryXML) FieldExpression(name, op, value string) {
-	qry := q.Qxml.CreateElement("query")
-	f := qry.CreateElement("field")
+	var froot *etree.Element
+
+	if q.MultiCond {
+		froot = q.Qry.CreateElement("condition")
+	} else {
+		froot = q.Qry
+	}
+
+	f := froot.CreateElement("field")
 	f.SetText(name)
 	e := f.CreateElement("expression")
 	e.SetText(value)
@@ -75,6 +89,7 @@ func NewQueryXML() *QueryXML {
 	q := &QueryXML{}
 	q.Doc = etree.NewDocument()
 	q.Qxml = q.Doc.CreateElement("queryxml")
+	q.Qry = q.Qxml.CreateElement("query")
 
 	return q
 }
