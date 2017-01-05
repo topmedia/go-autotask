@@ -74,7 +74,7 @@ func (c *Client) Body() []byte {
 	return body
 }
 
-func (c *Client) FetchResources(qe *entities.QueryExpression) map[int]entities.Resource {
+func (c *Client) FetchResources(qe entities.QueryCondition) map[int]entities.Resource {
 	q := qe.ToQueryXML()
 	q.Entity("Resource")
 	res := c.Request(q)
@@ -88,7 +88,7 @@ func (c *Client) FetchResources(qe *entities.QueryExpression) map[int]entities.R
 	return m
 }
 
-func (c *Client) FetchRoles(qe *entities.QueryExpression) map[int]entities.Role {
+func (c *Client) FetchRoles(qe entities.QueryCondition) map[int]entities.Role {
 	q := qe.ToQueryXML()
 	q.Entity("Role")
 	res := c.Request(q)
@@ -102,7 +102,7 @@ func (c *Client) FetchRoles(qe *entities.QueryExpression) map[int]entities.Role 
 	return m
 }
 
-func (c *Client) FetchAccounts(qe *entities.QueryExpression) []entities.Account {
+func (c *Client) FetchAccounts(qe entities.QueryCondition) []entities.Account {
 	q := qe.ToQueryXML()
 	q.Entity("Account")
 	res := c.Request(q)
@@ -120,7 +120,7 @@ func (c *Client) FetchAccountByID(id int) *entities.Account {
 	return &ar[0]
 }
 
-func (c *Client) FetchTickets(qe *entities.QueryExpression) []entities.Ticket {
+func (c *Client) FetchTickets(qe entities.QueryCondition) []entities.Ticket {
 	q := qe.ToQueryXML()
 	q.Entity("Ticket")
 	res := c.Request(q)
@@ -138,7 +138,7 @@ func (c *Client) FetchTicketByID(id int) *entities.Ticket {
 	return &tr[0]
 }
 
-func (c *Client) FetchTimeEntries(qe *entities.QueryExpression) []entities.TimeEntry {
+func (c *Client) FetchTimeEntries(qe entities.QueryCondition) []entities.TimeEntry {
 	q := qe.ToQueryXML()
 	q.Entity("Timeentry")
 	res := c.Request(q)

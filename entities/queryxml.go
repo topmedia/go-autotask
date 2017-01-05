@@ -19,6 +19,10 @@ const XMLtemplate = `<?xml version="1.0" encoding="UTF-8"?>
 </env:Envelope>
 `
 
+type QueryCondition interface {
+	ToQueryXML() *QueryXML
+}
+
 type QueryExpression struct {
 	Field string
 	Op    string
@@ -38,6 +42,10 @@ type QueryXML struct {
 
 func (q *QueryXML) ToReader() io.Reader {
 	return strings.NewReader(q.String())
+}
+
+func (q *QueryXML) ToQueryXML() *QueryXML {
+	return q
 }
 
 func (q *QueryXML) String() string {
