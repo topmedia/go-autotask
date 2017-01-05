@@ -1,0 +1,21 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "4JUlwdhhqFZEvSc4Atmjj5ebPJQ=",
+			"path": "github.com/OwnLocal/goes",
+			"revision": "6c9647b81cbf8daf85a01b1c15a7cc23de351c27",
+			"revisionTime": "2016-07-26T19:28:54Z",
+			"version": "=v1.0.0",
+			"versionExact": "v1.0.0"
+		},
+		{
+			"checksumSHA1": "OKRYtrKItvFaHK1PQSMhM365BeE=",
+			"path": "github.com/beevik/etree",
+			"revision": "4cd0dd976db869f817248477718071a28e978df0",
+			"revisionTime": "2016-12-09T19:49:18Z"
+		}
+	],
+	"rootPath": "github.com/topmedia/go-autotask"
+}
